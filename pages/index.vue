@@ -12,15 +12,25 @@
   </article>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .article {
   flex-grow: 1;
+
+  @media (max-height: 1000px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
 }
 
 .jumbotron {
   margin: 25% 0 30px;
   font-size: 1.4rem;
   max-width: 550px;
+  @media (max-height: 1000px) {
+    margin-top: 0;
+  }
 }
 </style>
 

@@ -1,0 +1,44 @@
+* {
+  font-family: "Quicksand", sans-serif !important;
+}
+
+html {
+  font-size: 18px;
+  word-spacing: 1px;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#__nuxt,
+#__layout {
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+body {
+  position: relative;
+  background-color: #f4ecd6;
+}
+
+#__layout {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  max-width: 768px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+}
+
+.form-field .label {
+  margin-bottom: 0;
+}

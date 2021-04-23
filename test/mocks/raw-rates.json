@@ -1,0 +1,72 @@
+{
+  "data": {
+    "rates": [
+      {
+        "sellRate": 87.0,
+        "sellIso": "EUR",
+        "sellCode": 978,
+        "buyRate": 92.0,
+        "buyIso": "RUB",
+        "buyCode": 643,
+        "quantity": 1,
+        "name": null,
+        "date": "26.03.2021"
+      },
+      {
+        "sellRate": 73.5,
+        "sellIso": "USD",
+        "sellCode": 840,
+        "buyRate": 78.5,
+        "buyIso": "RUB",
+        "buyCode": 643,
+        "quantity": 1,
+        "name": null,
+        "date": "26.03.2021"
+      },
+      {
+        "sellRate": 1.15,
+        "sellIso": "EUR",
+        "sellCode": 978,
+        "buyRate": 1.2,
+        "buyIso": "USD",
+        "buyCode": 840,
+        "quantity": 1,
+        "name": null,
+        "date": "26.03.2021"
+      },
+      {
+        "sellRate": 3.38,
+        "sellIso": "RUB",
+        "sellCode": 643,
+        "buyRate": 3.52,
+        "buyIso": "BYN",
+        "buyCode": 933,
+        "quantity": 100,
+        "name": "российских рублей",
+        "date": "26.03.2021"
+      },
+      {
+        "sellRate": 3.03,
+        "sellIso": "EUR",
+        "sellCode": 978,
+        "buyRate": 3.13,
+        "buyIso": "BYN",
+        "buyCode": 933,
+        "quantity": 1,
+        "name": "евро",
+        "date": "26.03.2021"
+      },
+      {
+        "sellRate": 2.6,
+        "sellIso": "USD",
+        "sellCode": 840,
+        "buyRate": 2.65,
+        "buyIso": "BYN",
+        "buyCode": 933,
+        "quantity": 1,
+        "name": "доллар США",
+        "date": "26.03.2021"
+      }
+    ]
+  }
+}

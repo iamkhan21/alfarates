@@ -1,20 +1,5 @@
-# alfarates
+#  [Todayrate](https://todayrate.vercel.app)
 
-## Build Setup
+**Todayrate** is the place where you can get today Belarusian banks currency rate. We get rates data via the Alfa Bank API.
 
-```bash
-# install dependencies
-$ npm install
-
-# serve with hot reload at localhost:3000
-$ npm run dev
-
-# build for production and launch server
-$ npm run build
-$ npm run start
-
-# generate static project
-$ npm run generate
-```
-
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+The project itself is made on Nuxt.js.

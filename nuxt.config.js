@@ -17,10 +17,7 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-    "~assets/fonts.css",
-    "~assets/global.css",
-  ],
+  css: ["~assets/fonts.css", "~assets/global.css"],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
@@ -33,7 +30,7 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [],
+  buildModules: ["@nuxtjs/pwa"],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
@@ -66,6 +63,9 @@ export default {
   pwa: {
     manifest: {
       lang: "en",
+      name: "Todayrate",
+      short_name: "Todayrate",
+      description:'Todayrate is the place where you can get today Belarusian banks currency rate. We get rates data via the Alfa Bank API'
     },
   },
 

@@ -1,0 +1,4 @@
+{
+  "presets": ["preact-cli/babel"],
+  "plugins": ["@babel/plugin-transform-regenerator"]
+}

@@ -1,0 +1,11 @@
+.header {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.header .brand {
+  margin: 0;
+  font-size: 24px;
+  color: #fff;
+}
+
+

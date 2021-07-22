@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>TodayRate</title>
+    <meta content="width=device-width,initial-scale=1" name="viewport" />
+    <meta content="yes" name="mobile-web-app-capable" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <link href="/assets/icons/apple-touch-icon.png" rel="apple-touch-icon" />
+    <style>
+      body {
+        max-width: 860px;
+        min-height: 100vh;
+        margin: auto !important;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto;
+      }
+
+      main {
+        padding: 20px;
+      }
+
+      header,
+      footer {
+        padding: 10px 20px;
+      }
+    </style>
+
+    <link href="https://cdn.jsdelivr.net" rel="preconnect" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css"
+      integrity="sha256-WAgYcAck1C1/zEl5sBl5cfyhxtLgKGdpI3oKyJffVRI="
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/siimple@3.3.1/dist/siimple.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,700"
+    />
+
+    <% preact.headEnd %>
+  </head>
+  <body>
+    <% preact.bodyEnd %>
+  </body>
+</html>

@@ -92,7 +92,6 @@ const Converter: FunctionalComponent = () => {
   useEffect(() => {
     // Recalculation of exchange amount on states changing for first amount (mean if you would like to use first amount input)
     if (isRatesLoaded && !isResultAmount) {
-
       const rate = services.convertingService.convert(
         firstCurrency,
         secondCurrency,
@@ -133,6 +132,7 @@ const Converter: FunctionalComponent = () => {
     operation,
   ]);
 
+  // @ts-ignore
   return (
     <section className={`siimple-card siimple-card-body ${style.card}`}>
       <div className={style.field}>
@@ -160,7 +160,10 @@ const Converter: FunctionalComponent = () => {
         />
       </div>
       <div className={style["help-text"]}>
-        I will {operation === ExchangeOperation.Buy ? ExchangeOperation.Sell : ExchangeOperation.Buy}
+        I will{" "}
+        {operation === ExchangeOperation.Buy
+          ? ExchangeOperation.Sell
+          : ExchangeOperation.Buy}
       </div>
       <div className={style.field}>
         <CurrencyInput

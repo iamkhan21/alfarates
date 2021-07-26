@@ -1,13 +1,13 @@
 import { RequestClient } from "./types";
 import greenlet from "greenlet";
 
-export class RestClient implements RequestClient {
-  getWorker = greenlet(async (url: string) => {
-    const res = await fetch(url);
-    return await res.json();
-  });
+const getWorker = greenlet(async (url: string) => {
+  const res = await fetch(url);
+  return await res.json();
+});
 
+export class RestClient implements RequestClient {
   get(url: string): Promise<any> {
-    return this.getWorker(url);
+    return getWorker(url);
   }
 }

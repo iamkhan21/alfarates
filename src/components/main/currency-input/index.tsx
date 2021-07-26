@@ -10,14 +10,7 @@ const fmt = {
   secondaryGroupSize: 3,
 };
 
-type onInput = { value: string; name: string };
-
-interface Props {
-  value: string | number | undefined;
-  onInput: ({ value, name }: onInput) => void;
-}
-
-const CurrencyInput: FunctionalComponent<Props> = ({
+const CurrencyInput: FunctionalComponent<any> = ({
   value,
   onInput,
   ...props

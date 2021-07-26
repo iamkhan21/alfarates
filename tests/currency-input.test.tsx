@@ -1,56 +1,76 @@
 import { h } from "preact";
-// See: https://github.com/preactjs/enzyme-adapter-preact-pure
-import { mount, shallow } from "enzyme";
 import CurrencyInput from "@components/main/currency-input";
+import {
+  act,
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/preact";
+import "@testing-library/jest-dom/extend-expect";
+
+afterEach(cleanup);
+
+const onInput = jest.fn();
 
 describe("CurrencyInput", () => {
-  test("should contain input element", () => {
-    const wrapper = mount(<CurrencyInput />);
-    const input = wrapper.find("input");
-    expect(input).toBeTruthy();
+  it("should render input HTML element in document", () => {
+    render(<CurrencyInput value={10} onInput={onInput} />);
+    expect(screen.getByTestId("input")).toBeInTheDocument();
   });
   test("should use value from props", () => {
-    const value = '10';
-    const wrapper = mount(<CurrencyInput value={value} />);
-    const input = wrapper.find("input");
-    expect(input.prop("value")).toEqual(value);
-  });
-  test("should change value on input", () => {
-    let testValue = 30;
+    const value = "12300";
+    render(<CurrencyInput value={value} onInput={() => {}} />);
+    const input = screen.getByTestId("input");
 
-    const wrapper = mount(
-      <CurrencyInput
-        value={testValue}
-        onChange={(e: any) => {
-          testValue = +e.target.value;
-        }}
-      />
+    expect(input).toHaveValue("12 300");
+  });
+
+  test("should change value on input", async () => {
+    let testValue = "30";
+
+    const onInput = ({ value }: any) => {
+      testValue = value;
+    };
+
+    const { rerender } = render(
+      <CurrencyInput value={testValue} onInput={onInput} />
     );
-    const input = wrapper.find("input");
-    input.getDOMNode().value = "123";
-    input.simulate("change");
 
-    expect(testValue).toEqual(123);
+    const input = screen.getByTestId("input");
+
+    const newValue = "12340";
+    fireEvent.input(input, { target: { value: newValue } });
+
+    rerender(<CurrencyInput value={testValue} onInput={onInput} />);
+
+    await waitFor(() => {
+      expect(testValue).toEqual(newValue);
+      expect(input).toHaveValue("12 340");
+    });
   });
-
   test("should use element attributes from props", () => {
     const name = "test";
 
-    const wrapper = mount(
+    render(
       <CurrencyInput
         id={name}
         className={name}
         name={name}
         type="number"
         inputMode="numeric"
+        value={10}
+        onInput={onInput}
       />
     );
-    const input = wrapper.find("input");
 
-    expect(input.prop("className")).toContain(name);
-    expect(input.prop("id")).toEqual(name);
-    expect(input.prop("name")).toEqual(name);
-    expect(input.prop("type")).toEqual("number");
-    expect(input.prop("inputMode")).toEqual("numeric");
+    const input = screen.getByTestId("input");
+
+    expect(input).toHaveClass(name);
+    expect(input).toHaveAttribute("id", name);
+    expect(input).toHaveAttribute("name", name);
+    expect(input).toHaveAttribute("type", "number");
+    expect(input).toHaveAttribute("inputMode", "numeric");
   });
 });

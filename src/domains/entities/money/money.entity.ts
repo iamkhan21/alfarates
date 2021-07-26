@@ -20,11 +20,11 @@ export class MoneyEntity {
   }
 
   static divide(a: MoneyEntity, b: MoneyEntity): MoneyEntity {
-    return new MoneyEntity(a.amount.dividedBy(b.amount));
+    return MoneyEntity.of(+a.amount.dividedBy(b.amount).toFixed(2));
   }
 
   static multiply(a: MoneyEntity, b: MoneyEntity): MoneyEntity {
-    return new MoneyEntity(a.amount.multipliedBy(b.amount));
+    return MoneyEntity.of(+a.amount.multipliedBy(b.amount).toFixed(2));
   }
 
   static toFormat(a: MoneyEntity): MoneyEntity {

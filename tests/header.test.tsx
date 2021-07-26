@@ -1,11 +1,13 @@
-import { h } from 'preact';
-import Header from '@components/core/header';
-// See: https://github.com/preactjs/enzyme-adapter-preact-pure
-import { shallow } from 'enzyme';
+import { h } from "preact";
+import Header from "@components/core/header";
+import { cleanup, render } from "@testing-library/preact";
+import "@testing-library/jest-dom/extend-expect";
 
-describe('Header', () => {
-    test('should have brand label', () => {
-        const wrapper = shallow(<Header />);
-        expect(wrapper.find('h1').text()).toBe('TodayRate');
-    });
+afterEach(cleanup);
+
+describe("Header", () => {
+  test("should have brand label", () => {
+    const { container } = render(<Header />);
+    expect(container).toHaveTextContent("Rately");
+  });
 });

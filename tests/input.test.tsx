@@ -1,42 +1,47 @@
 import { h } from "preact";
 import Input from "@components/shared/input";
-// See: https://github.com/preactjs/enzyme-adapter-preact-pure
-import { mount, shallow } from "enzyme";
+import { cleanup, fireEvent, render, screen } from "@testing-library/preact";
+import "@testing-library/jest-dom/extend-expect";
+
+afterEach(cleanup);
 
 describe("Input", () => {
-  test("should contain input element", () => {
-    const wrapper = shallow(<Input />);
-    const input = wrapper.find("input");
-    expect(input).toBeTruthy();
+  it("should render input HTML element in document", () => {
+    render(<Input value={10} />);
+
+    expect(screen.getByTestId("input")).toBeInTheDocument();
   });
   test("should use value from props", () => {
-    const value = 10;
-    const wrapper = shallow(<Input value={value} />);
-    const input = wrapper.find("input");
-    expect(input.prop("value")).toEqual(value);
+    const value = "10";
+    render(<Input value={value} />);
+
+    const input = screen.getByTestId("input");
+    expect(input).toHaveValue(value);
   });
   test("should change value on input", () => {
     let testValue = 30;
 
-    const wrapper = mount(
+    const wrapper = render(
       <Input
         value={testValue}
-        onChange={(e: any) => {
-          testValue = +e.target.value;
+        onInput={(e: any) => {
+          testValue = e.target.value;
         }}
       />
     );
-    const input = wrapper.find("input");
-    input.getDOMNode().value = "123";
-    input.simulate("change");
+    const input = screen.getByTestId("input");
 
-    expect(testValue).toEqual(123);
+    const newValue = "1234";
+    fireEvent.input(input, { target: { value: newValue } });
+
+    expect(input).toHaveValue(newValue);
+    expect(testValue).toEqual(newValue);
   });
 
   test("should use element attributes from props", () => {
     const name = "test";
 
-    const wrapper = shallow(
+    render(
       <Input
         id={name}
         className={name}
@@ -45,12 +50,12 @@ describe("Input", () => {
         inputMode="numeric"
       />
     );
-    const input = wrapper.find("input");
-    
-    expect(input.prop("className")).toContain(name);
-    expect(input.prop("id")).toEqual(name);
-    expect(input.prop("name")).toEqual(name);
-    expect(input.prop("type")).toEqual("number");
-    expect(input.prop("inputMode")).toEqual("numeric");
+    const input = screen.getByTestId("input");
+
+    expect(input).toHaveClass(name);
+    expect(input).toHaveAttribute("id", name);
+    expect(input).toHaveAttribute("name", name);
+    expect(input).toHaveAttribute("type", "number");
+    expect(input).toHaveAttribute("inputMode", "numeric");
   });
 });

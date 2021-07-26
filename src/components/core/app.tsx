@@ -1,18 +1,15 @@
 import { Fragment, FunctionalComponent, h } from "preact";
 import Header from "./header";
 import Main from "./main";
-import { Provider } from "unistore/preact";
-import { store } from "@store/index";
 
 const App: FunctionalComponent = () => {
   return (
-    <Provider store={store}>
       <Fragment>
         <Header />
         <Main />
         <footer>
           <small>
-            Створана{" "}
+            Created by {" "}
             <a
               href="https://www.8byte.agency"
               target="_blank"
@@ -23,7 +20,6 @@ const App: FunctionalComponent = () => {
           </small>
         </footer>
       </Fragment>
-    </Provider>
   );
 };
 

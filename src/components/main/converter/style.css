@@ -1,8 +1,11 @@
 .card {
-  font-size: 1.25rem;
   max-width: 300px;
   padding: 15px 20px;
   margin-top: 50px;
+}
+
+.card * {
+  font-size: 1.15em;
 }
 
 .field {
@@ -16,6 +19,5 @@
 }
 
 .help-text {
-  font-size: 0.9rem;
   margin-top: 10px;
 }

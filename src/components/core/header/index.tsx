@@ -4,7 +4,7 @@ import style from "./style.css";
 const Header: FunctionalComponent = () => {
   return (
     <header className={`${style.header} siimple--bg-dark siimple--color-white`}>
-      <h1 className={style.brand} title="БАНКАМАТ-АБМЕНЬНІК-БАНК">TodayRate</h1>
+      <h1 className={style.brand}>Rately</h1>
     </header>
   );
 };

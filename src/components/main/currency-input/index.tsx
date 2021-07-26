@@ -1,6 +1,6 @@
 import { FunctionalComponent, h } from "preact";
 import Input from "@components/shared/input";
-import { useCallback, useEffect, useState } from "preact/hooks";
+import { useCallback, useLayoutEffect, useState } from "preact/hooks";
 import { BigNumber } from "bignumber.js";
 
 const fmt = {
@@ -10,15 +10,27 @@ const fmt = {
   secondaryGroupSize: 3,
 };
 
-const CurrencyInput: FunctionalComponent = ({ value, onInput, ...props }:any) => {
+type onInput = { value: string; name: string };
+
+interface Props {
+  value: string | number | undefined;
+  onInput: ({ value, name }: onInput) => void;
+}
+
+const CurrencyInput: FunctionalComponent<Props> = ({
+  value,
+  onInput,
+  ...props
+}: any) => {
   const [amount, setAmount] = useState(value);
 
   const onAmountInput = useCallback(({ target: { value, name } }: any) => {
     onInput({ value: value.replace(" ", ""), name });
   }, []);
 
-  useEffect(() => {
-    setAmount(new BigNumber(value).toFormat(fmt));
+  useLayoutEffect(() => {
+    const format = new BigNumber(value).toFormat(fmt);
+    setAmount(format);
   }, [value]);
 
   return (

@@ -9,31 +9,9 @@ import {
   when,
 } from "ts-mockito";
 import { RatesService } from "./rates.service";
-import { CurrencyRateEntity } from "@entities/currency-rate";
-import { MoneyEntity } from "@entities/money";
 import { BrowserStorage } from "@adapters/browser-storage";
 import { BankApi } from "@adapters/bank-api";
-
-const rates: CurrencyRateEntity[] = [
-  CurrencyRateEntity.of({
-    sellRate: MoneyEntity.of(2.39),
-    sellIso: "USD",
-    buyRate: MoneyEntity.of(2.54),
-    buyIso: "BYN",
-  }),
-  CurrencyRateEntity.of({
-    sellRate: MoneyEntity.of(3.39),
-    sellIso: "EUR",
-    buyRate: MoneyEntity.of(3.54),
-    buyIso: "BYN",
-  }),
-  CurrencyRateEntity.of({
-    sellRate: MoneyEntity.of(1.1),
-    sellIso: "EUR",
-    buyRate: MoneyEntity.of(1.3),
-    buyIso: "USD",
-  }),
-];
+import { rates } from "@services/rates-data";
 
 let service: RatesService;
 let mockedStorage: BrowserStorage;

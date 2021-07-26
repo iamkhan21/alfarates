@@ -1,26 +1,31 @@
 import { FunctionalComponent, h } from "preact";
 import style from "./style.css";
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "preact/hooks";
 
-import { connect } from "unistore/preact";
-import { useCallback, useEffect, useState } from "preact/hooks";
-import { convertingService, ratesService } from "@services/index";
 import { ExchangeOperation } from "@services/converting";
 import { MoneyEntity } from "@entities/money";
-import CurrencySelector from "@components/main/currency-selector";
 import CurrencyInput from "@components/main/currency-input";
 import Select from "@components/shared/select";
 import { SelectOption } from "@components/shared/select/types";
-
-interface Props {
-  isRatesLoaded: boolean;
-}
+import { ServicesContext } from "../../../contexts";
+import EntrancePoint from "@services/index";
 
 const operations: SelectOption[] = [
   { label: "BUY", value: ExchangeOperation.Buy },
   { label: "SELL", value: ExchangeOperation.Sell },
 ];
 
-const Converter: FunctionalComponent<Props> = ({ isRatesLoaded }: Props) => {
+const Converter: FunctionalComponent = () => {
+  const services: EntrancePoint = useContext(ServicesContext);
+
+  const [currencies, setCurrencies] = useState<SelectOption[]>([]);
+  const [isRatesLoaded, setIsRatesLoaded] = useState(false);
   const [isResultAmount, setIsResultAmount] = useState(false);
   const [firstAmount, setFirstAmount] = useState<MoneyEntity>(
     MoneyEntity.of(1)
@@ -56,7 +61,7 @@ const Converter: FunctionalComponent<Props> = ({ isRatesLoaded }: Props) => {
           setFirstCurrency(value);
           break;
         case "second-currency":
-          if (value === firstCurrency) setSecondCurrency(secondCurrency);
+          if (value === firstCurrency) setFirstCurrency(secondCurrency);
           setSecondCurrency(value);
           break;
       }
@@ -64,25 +69,38 @@ const Converter: FunctionalComponent<Props> = ({ isRatesLoaded }: Props) => {
     [firstCurrency, secondCurrency]
   );
 
-  useEffect(() => {
-    // Currencies initialization on rates loading
-    if (isRatesLoaded) {
-      const currencies = ratesService.currencies;
+  useLayoutEffect(() => {
+    // Initiate rates loading and other initial data
+    const initiate = async () => {
+      await services.ratesService.init();
+      const currencies = services.ratesService.currencies;
+      const list = currencies.map(
+        (currency): SelectOption => ({
+          label: currency,
+          value: currency,
+        })
+      );
+
       setFirstCurrency(currencies[0]);
       setSecondCurrency(currencies[1]);
-    }
-  }, [isRatesLoaded]);
+      setCurrencies(list);
+      setIsRatesLoaded(true);
+    };
+    initiate();
+  }, []);
 
   useEffect(() => {
     // Recalculation of exchange amount on states changing for first amount (mean if you would like to use first amount input)
     if (isRatesLoaded && !isResultAmount) {
-      const rate = convertingService.convert(
+
+      const rate = services.convertingService.convert(
         firstCurrency,
         secondCurrency,
         operation,
         firstAmount,
         isResultAmount
       );
+
       setSecondAmount(rate);
     }
   }, [
@@ -97,7 +115,7 @@ const Converter: FunctionalComponent<Props> = ({ isRatesLoaded }: Props) => {
   useEffect(() => {
     // Recalculation of exchange amount on states changing for second amount (mean if you would like to use second amount input)
     if (isRatesLoaded && isResultAmount) {
-      const rate = convertingService.convert(
+      const rate = services.convertingService.convert(
         firstCurrency,
         secondCurrency,
         operation,
@@ -132,15 +150,18 @@ const Converter: FunctionalComponent<Props> = ({ isRatesLoaded }: Props) => {
           type="text"
           value={firstAmount.amountNum}
           onInput={onAmountInput}
-          className='amount-input'
+          className="amount-input"
         />
-        <CurrencySelector
+        <Select
           name="first-currency"
+          data={currencies}
           value={firstCurrency}
           onChange={onSelectCurrency}
         />
       </div>
-      <div className={style['help-text']}>I will {operation === ExchangeOperation.Buy ? "pay" : "get"}</div>
+      <div className={style["help-text"]}>
+        I will {operation === ExchangeOperation.Buy ? ExchangeOperation.Sell : ExchangeOperation.Buy}
+      </div>
       <div className={style.field}>
         <CurrencyInput
           name="second-amount"
@@ -148,12 +169,12 @@ const Converter: FunctionalComponent<Props> = ({ isRatesLoaded }: Props) => {
           type="text"
           value={secondAmount.amountNum}
           onInput={onAmountInput}
-          className='amount-input'
-
+          className="amount-input"
         />
 
-        <CurrencySelector
+        <Select
           name="second-currency"
+          data={currencies}
           value={secondCurrency}
           onChange={onSelectCurrency}
         />
@@ -162,5 +183,4 @@ const Converter: FunctionalComponent<Props> = ({ isRatesLoaded }: Props) => {
   );
 };
 
-// @ts-ignore
-export default connect("isRatesLoaded", undefined)(Converter);
+export default Converter;

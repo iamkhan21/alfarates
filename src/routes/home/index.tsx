@@ -1,7 +1,7 @@
 import { createContext, FunctionalComponent, h } from "preact";
 import style from "./style.css";
 import { lazy, Suspense } from "preact/compat";
-import { ServicesContext,instance } from "../../contexts";
+import { ServicesContext, instance } from "../../contexts";
 
 const Converter = lazy(() => import("@components/main/converter"));
 
@@ -13,7 +13,9 @@ const Home: FunctionalComponent = () => {
         Belarus. We get data from the Alfa Bank API. The project itself is made
         with Preact.
       </p>
-      <Suspense fallback={<div>loading...</div>}>
+      <Suspense
+        fallback={<div style={{ paddingTop: 75, height: 180 }}>loading...</div>}
+      >
         <ServicesContext.Provider value={instance}>
           <Converter />
         </ServicesContext.Provider>

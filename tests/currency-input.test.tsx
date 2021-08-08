@@ -1,7 +1,6 @@
 import { h } from "preact";
 import CurrencyInput from "@components/main/currency-input";
 import {
-  act,
   cleanup,
   fireEvent,
   render,
